@@ -64,21 +64,33 @@ void scoreboard() {
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, direction_keys[i]);
 
 	glColor3d(1, 1, 1);
-	char title[] = "SCORE: ";
+	char title[] = "SCORE :";
 	glColor3d(1, 1, 1);
 	glRasterPos2d(210, 460);
 	for (i = 0;i < sizeof(title);i++)
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, title[i]);
 
-	glRasterPos2d(260, 460);
-	glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, score);
+	glRasterPos2d(245, 460);
+	char txt[32];
+	sprintf_s(txt, "%6d", score);
+	for (i = 0;i < sizeof(title);i++)
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, txt[i]);
 }
 
+void bricks(int x) {
+	glColor3d(0.6, 0.6, 0.6);
+	glBegin(GL_POLYGON);
+	glVertex2d(x, 300.0);
+	glVertex2d(x + 15, 300.0);
+	glVertex2d(x + 15, 315.0);
+	glVertex2d(x, 315.0);
+	glEnd();
+}
 void castle()
 {
 	int k;
 	//Sky 
-	glColor3d(0.3, 0.2, 1);
+	glColor3d(0.0, 0.7, 0.96);
 	glBegin(GL_POLYGON);
 	glVertex2d(0.0, 300.0);
 	glVertex2d(500.0, 30.0);
@@ -87,7 +99,7 @@ void castle()
 	glEnd();
 
 	//Castle ground
-	glColor3d(0.1, 0.9, 0);
+	glColor3d(0.2, 0.6, 0.2);
 	glBegin(GL_POLYGON);
 	glVertex2d(0.0, 0.0);
 	glVertex2d(500.0, 0.0);
@@ -121,6 +133,7 @@ void castle()
 	glVertex2d(420.0, 270.0);
 	glVertex2d(330.0, 270.0);
 	glEnd();
+
 
 	//Tomb structure(left)
 	glColor3d(0.8, 0.8, 0.8);
@@ -274,7 +287,7 @@ void castle()
 	glEnd();
 
 	//Main Door
-	glColor3d(0.6, 0.3, 0);
+	glColor3d(0.4, 0.4, 0.4);
 	glBegin(GL_POLYGON);
 	glVertex2d(200.0, 100.0);
 	glVertex2d(300.0, 100.0);
@@ -283,7 +296,7 @@ void castle()
 	glVertex2d(200.0, 300.0);
 	glEnd();
 
-	glColor3d(0.5, 0.23, 0);
+	glColor3d(0.25, 0.25, 0.25);
 	glBegin(GL_POLYGON);
 	glVertex2d(230, 100.0);
 	glVertex2d(270, 100.0);
@@ -292,7 +305,7 @@ void castle()
 	glEnd();
 
 	//windows
-	glColor3d(0.2, 0.2, 0.2);
+	glColor3d(0.3, 0.3, 0.3);
 	glPointSize(25);
 	glBegin(GL_POINTS);
 	glVertex2d(25, 200);
@@ -301,6 +314,19 @@ void castle()
 	glVertex2d(475, 250);
 	glEnd();
 
+	//bricks
+	bricks(70);
+	bricks(90);
+	bricks(110);
+	bricks(130);
+	bricks(150);
+	bricks(170);
+	bricks(320);
+	bricks(340);
+	bricks(360);
+	bricks(380);
+	bricks(400);
+	bricks(420);
 }
 
 void newCircle(float x, float y, float radius) {
@@ -336,6 +362,7 @@ void hoop(float x, float y){
 
 
 void snitch(int x, int y) {
+	flag = 0;
 	glColor3f(0.95, 0.84, 0);
 	glBegin(GL_TRIANGLE_FAN);
 	for (int i = 0;i < 3600;++i)
@@ -358,6 +385,10 @@ void snitch(int x, int y) {
 		glVertex2f(x - 25, y);
 	glEnd();
 
+	if ((x - x1) == 0 || (y - y2) <= 10) {
+		flag = 1;
+	}
+		
 }
 
 void playground() {
@@ -501,7 +532,10 @@ void move()
 	glFlush();
 	glPopMatrix();
 
+	glPushMatrix();
 	scoreboard(); 
+	glFlush();
+	glPopMatrix();
 
 	glutSwapBuffers();
 	glutPostRedisplay();
@@ -544,28 +578,28 @@ void mainKey(int key, int x, int y) {
 	if (key == GLUT_KEY_RIGHT)
 	{
 		if (x1 < 500)
-			x1 += 1;
+			x1 += 2;
 		else if (x1 == 500)
 			x1 = 0;
 	}
 	if (key == GLUT_KEY_LEFT)
 	{
 		if (x1 > 0)
-			x1 -= 1;
+			x1 -= 2;
 		else if (x1 <= 0)
 			x1 = 500;
 	}
 	if (key == GLUT_KEY_UP)
 	{
 		if (y2 < 500)
-			y2 += 1;
+			y2 += 2;
 		else if (y2 == 500)
 			y2 = 0;
 	}
 	if (key == GLUT_KEY_DOWN)
 	{
 		if (y2 > 0)
-			y2 -= 1;
+			y2 -= 2;
 		else if (y2 <= 0)
 			y2 = 500;
 	}
@@ -581,9 +615,7 @@ void display()
 void myTimer(int val) {
 	glutDisplayFunc(display);
 	glutPostRedisplay();
-	
 }
-
 
 int main(int argc, char** argv)
 {
