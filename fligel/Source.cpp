@@ -4,8 +4,8 @@
 #include <time.h>
 
 int i, j, score = 0, flag = 1;
-float x1 = 0, y2 = 0;
-
+float x1 = 0, y2 = 0, num = 1;
+int visible[5] = {1, 1, 1, 1, 1};
 
 void init()
 {
@@ -345,7 +345,7 @@ void newCircle(float x, float y, float radius) {
 
 void hoop(float x, float y){
 
-	glColor3f(0.35, 0.25, 0.06);
+	glColor3f(0, 0, 0);
 	glBegin(GL_POLYGON);
 	glVertex2d(x, 0.0);
 	glVertex2d(x + 2, 0.0);
@@ -361,8 +361,13 @@ void hoop(float x, float y){
 }
 
 
-void snitch(int x, int y) {
-	flag = 0;
+void snitch(int id, int x, int y) {
+	if (num == 6) {
+		num = 1;
+		for (int k = 1; k < 5; k++)
+			visible[k] = 1;
+	}
+
 	glColor3f(0.95, 0.84, 0);
 	glBegin(GL_TRIANGLE_FAN);
 	for (int i = 0;i < 3600;++i)
@@ -373,44 +378,55 @@ void snitch(int x, int y) {
 	glEnd();
 	glColor3f(0.9, 1, 1);
 	glBegin(GL_TRIANGLE_STRIP);
-		glVertex2f(7 + x, y);
-		glVertex2f(12 + x, 7 + y);
-		glVertex2f(18 + x, 3 + y);
-		glVertex2f(25 + x, y);
+	glVertex2f(7 + x, y);
+	glVertex2f(12 + x, 7 + y);
+	glVertex2f(18 + x, 3 + y);
+	glVertex2f(25 + x, y);
 	glEnd();
 	glBegin(GL_TRIANGLE_STRIP);
-		glVertex2f(x - 7, y);
-		glVertex2f(x - 12, y + 7);
-		glVertex2f(x - 18, y + 3);
-		glVertex2f(x - 25, y);
+	glVertex2f(x - 7, y);
+	glVertex2f(x - 12, y + 7);
+	glVertex2f(x - 18, y + 3);
+	glVertex2f(x - 25, y);
 	glEnd();
 
-	if ((x - x1) == 0 || (y - y2) <= 10) {
-		flag = 1;
+
+	if (((x == 2*x1)) && ((y == y2)) && (num == id)) {
+		flag = 0;
+		num++;
+		visible[id - 1] = 0;
 	}
-		
 }
 
 void playground() {
 	hoop(55, 130);
-	snitch(100, 200);
+
+	if(visible[0] == 1)
+		snitch(1, 100, 200); 
 
 	hoop(180, 90);
-	snitch(230, 120);
+	if (visible[1] == 1)
+		snitch(2, 232, 120);
 
 	hoop(340, 180);
 
 	hoop(450, 125);
-	snitch(420, 100);
+	if (visible[2] == 1)
+		snitch(3, 420, 100);
 
 	hoop(550, 85);
 
 	hoop(680, 190);
-	snitch(700, 200);
+	if (visible[3] == 1)
+		snitch(4, 700, 200);
 
 	hoop(800, 100);
-	snitch(830, 170);
-
+	if (visible[4] == 1)
+		snitch(5, 832, 170);
+	
+	if (visible[4] == 0 && x1 == 500)
+		visible[0] = 1;
+		
 	hoop(940, 70);
 
 }
@@ -520,6 +536,14 @@ void harry()
 
 void move()
 {
+	printf("%f", x1);
+	printf("%f", y2);
+
+	if (flag == 0) {
+		flag = 1;
+		score = score + 1;
+	}
+
 	glPushMatrix();
 	glTranslatef(-x1, 0, 0);
 	playground();
@@ -538,7 +562,7 @@ void move()
 	glPopMatrix();
 
 	glutSwapBuffers();
-	glutPostRedisplay();
+	//glutPostRedisplay();
 
 }
 
@@ -609,7 +633,7 @@ void display()
 {
 	castle();
 	move();
-	glFlush();
+	glutPostRedisplay();
 }
 
 void myTimer(int val) {
