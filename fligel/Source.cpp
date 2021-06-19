@@ -3,7 +3,7 @@
 #include<math.h>
 #include <time.h>
 
-int i, j, score = 0, flag = 1;
+int i, j, score = 0, miss_score = 0, flag = 1, miss = 0;
 float x1 = 0, y2 = 0, num = 1;
 int visible[5] = {1, 1, 1, 1, 1};
 
@@ -52,29 +52,92 @@ void scoreboard() {
 	glColor3d(1, 1, 1);
 	char arrow_keys[] = "Use arrow keys for moving up, down, right and left ";
 	glColor3d(1, 1, 1);
-	glRasterPos2d(2, 490);
+	glRasterPos2d(15, 490);
 	for (i = 0;i < sizeof(arrow_keys);i++)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, arrow_keys[i]);
 
 	glColor3d(1, 1, 1);
-	char direction_keys[] = "u: Move diagonally upwards  d: move diagonally downwards";
+	char total_misses[] = "5 missed catches of snitch allowed";
 	glColor3d(1, 1, 1);
-	glRasterPos2d(310, 490);
-	for (i = 0;i < sizeof(direction_keys);i++)
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, direction_keys[i]);
+	glRasterPos2d(370, 490);
+	for (i = 0;i < sizeof(total_misses);i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, total_misses[i]);
 
 	glColor3d(1, 1, 1);
-	char title[] = "SCORE :";
+	char title[] = "SCORE  : ";
 	glColor3d(1, 1, 1);
-	glRasterPos2d(210, 460);
+	glRasterPos2d(220, 460);
 	for (i = 0;i < sizeof(title);i++)
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, title[i]);
 
-	glRasterPos2d(245, 460);
+	glRasterPos2d(260, 460);
 	char txt[32];
 	sprintf_s(txt, "%6d", score);
-	for (i = 0;i < sizeof(title);i++)
+	for (i = 0;i < sizeof(txt);i++)
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, txt[i]);
+
+	glColor3d(1, 1, 1);
+	char missed_message[] = "MISSES : ";
+	glColor3d(1, 1, 1);
+	glRasterPos2d(220, 430);
+
+	for (i = 0; i < sizeof(missed_message); i++)
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, missed_message[i]);
+
+	glRasterPos2d(260, 430);
+	char miss_txt[32];
+	sprintf_s(miss_txt, "%6d", miss_score);
+	for (i = 0; i < sizeof(miss_txt); i++)
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, miss_txt[i]);
+}
+
+void game_over() {
+
+	glColor3d(0, 0, 0);
+	glBegin(GL_POLYGON);
+	glVertex2d(100.0, 100.0);
+	glVertex2d(400.0, 100.0);
+	glVertex2d(400.0, 400.0);
+	glVertex2d(100.0, 400.0);
+	glEnd();
+
+	char game_over[] = "GAME  OVER!!!";
+	glColor3d(1, 1, 1);
+	glRasterPos2d(210, 350);
+	for (i = 0;i < sizeof(game_over);i++)
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, game_over[i]);
+
+	glColor3d(1, 1, 1);
+	char over_title[] = "SCORE : ";
+	glColor3d(1, 1, 1);
+	glRasterPos2d(225, 270);
+	for (i = 0;i < sizeof(over_title);i++)
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, over_title[i]);
+
+	glRasterPos2d(265, 270);
+	char over_txt[32];
+	sprintf_s(over_txt, "%6d", score);
+	for (i = 0;i < sizeof(over_txt);i++)
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, over_txt[i]);
+
+	char exit_message[] = "Enter e to exit the game";
+	glColor3d(1, 1, 1);
+	glRasterPos2d(190, 180);
+	for (i = 0;i < sizeof(exit_message);i++)
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, exit_message[i]);
+
+}
+
+void delay()
+{
+	j = 50000;
+	while (j != 0)
+	{
+		j--;
+		i = 50000;
+		while (i != 0)
+			i--;
+	}
 }
 
 void bricks(int x) {
@@ -86,9 +149,9 @@ void bricks(int x) {
 	glVertex2d(x, 315.0);
 	glEnd();
 }
+
 void castle()
 {
-	int k;
 	//Sky 
 	glColor3d(0.0, 0.7, 0.96);
 	glBegin(GL_POLYGON);
@@ -227,7 +290,7 @@ void castle()
 
 
 	//Tomb(big) structure(left)
-	glColor3d(0.8, 0.8, 0.8);
+	glColor3d(0.75, 0.75, 0.75);
 	glBegin(GL_POLYGON);
 	glVertex2d(100, 300.0);
 	glVertex2d(100.0, 400.0);
@@ -248,7 +311,7 @@ void castle()
 	glVertex2d(135, 330.0);
 	glEnd();
 
-	glColor3d(0.2, 0.2, 0.2);
+	glColor3d(0.3, 0.3, 0.3);
 	glBegin(GL_LINES);
 	glVertex2d(115, 330.0);
 	glVertex2d(135, 380.0);
@@ -257,7 +320,7 @@ void castle()
 	glEnd();
 
 	//Tomb(big) structure(right)
-	glColor3d(0.8, 0.8, 0.8);
+	glColor3d(0.75, 0.75, 0.75);
 	glBegin(GL_POLYGON);
 	glVertex2d(450 - 100, 300.0);
 	glVertex2d(450 - 100.0, 400.0);
@@ -278,7 +341,7 @@ void castle()
 	glVertex2d(385, 330.0);
 	glEnd();
 
-	glColor3d(0.2, 0.2, 0.2);
+	glColor3d(0.3, 0.3, 0.3);
 	glBegin(GL_LINES);
 	glVertex2d(365, 330.0);
 	glVertex2d(385, 380.0);
@@ -360,7 +423,6 @@ void hoop(float x, float y){
 	glPopMatrix();
 }
 
-
 void snitch(int id, int x, int y) {
 	if (num == 6) {
 		num = 1;
@@ -391,18 +453,24 @@ void snitch(int id, int x, int y) {
 	glEnd();
 
 
-	if (((x == 2*x1)) && ((y == y2)) && (num == id)) {
+	if (((x == 2*x1)) && (fabsf(y-y2)<30) && (num == id)) {
 		flag = 0;
 		num++;
 		visible[id - 1] = 0;
 	}
+	if ((x1 == (x / static_cast<float>(2)) + 10) && (num == id)) {
+		num++;
+		visible[id - 1] = 0;
+		miss = 1;
+	}
+	
 }
 
 void playground() {
 	hoop(55, 130);
 
 	if(visible[0] == 1)
-		snitch(1, 100, 200); 
+		snitch(1, 100, 200);   
 
 	hoop(180, 90);
 	if (visible[1] == 1)
@@ -424,7 +492,7 @@ void playground() {
 	if (visible[4] == 1)
 		snitch(5, 832, 170);
 	
-	if (visible[4] == 0 && x1 == 500)
+	if ((visible[4] == 0 && x1 == 500))
 		visible[0] = 1;
 		
 	hoop(940, 70);
@@ -536,14 +604,19 @@ void harry()
 
 void move()
 {
-	printf("%f", x1);
-	printf("%f", y2);
+	//printf("%f", x1);
+	//printf("%f", y2);
 
 	if (flag == 0) {
 		flag = 1;
 		score = score + 1;
 	}
 
+	if (miss == 1) {
+		miss_score++;
+		miss = 0;
+	}
+	
 	glPushMatrix();
 	glTranslatef(-x1, 0, 0);
 	playground();
@@ -561,41 +634,17 @@ void move()
 	glFlush();
 	glPopMatrix();
 
+	if (miss_score == 5) {
+		game_over();
+	}
+	if (miss_score == 6) {
+		game_over();
+		delay();
+	}
+
 	glutSwapBuffers();
 	//glutPostRedisplay();
 
-}
-
-void myKey(unsigned char key, int x, int y)
-{
-	if (key == 'u')
-	{
-		if (x1  < 500)
-			x1 += 1;
-		else if (x1 == 500)
-			x1 = 0;
-	}
-	if (key == 'd')
-	{
-		if (x1 > 0)
-			x1 -= 1;
-		else if (x1 <= 0)
-			x1 = 500;
-	}
-	if (key == 'u')
-	{
-		if (y2 < 500)
-			y2 += 1;
-		else if (y2 == 500)
-			y2 = 0;
-	}
-	if (key == 'd')
-	{
-		if (y2 > 0)
-			y2 -= 1;
-		else if (y2 <= 0)
-			y2 = 500;
-	}	
 }
 
 void mainKey(int key, int x, int y) {
@@ -626,6 +675,14 @@ void mainKey(int key, int x, int y) {
 			y2 -= 2;
 		else if (y2 <= 0)
 			y2 = 500;
+	}
+}
+
+void myKey(unsigned char key, int x, int y)
+{
+	if (key == 'e')
+	{
+		exit(0);
 	}
 }
 
