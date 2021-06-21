@@ -1,5 +1,5 @@
-<h1 align="center">FLIGEL - Quidditch Practice Game</h1>
+<h1 align="center">FLIGEL - Harry Potter Game</h1>
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/53074235/121678683-1a1ec100-cad5-11eb-9f25-5d81c719acde.png" width="60%" height="50%">
+<img src="https://user-images.githubusercontent.com/53074235/122717330-15060280-d289-11eb-958e-4c6b397d5697.png" width="100%" height="50%">
 </p>
