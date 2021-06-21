@@ -1,7 +1,7 @@
 <h1 align="center">FLIGEL - Harry Potter Game :mage:</h1>
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/53074235/122717330-15060280-d289-11eb-958e-4c6b397d5697.png" width="80%" height="50%">
+<img src="https://user-images.githubusercontent.com/53074235/122728877-30c3d580-d296-11eb-989c-4f6468072e02.png" width="80%" height="50%">
 </p>
 
 <p align="center">
