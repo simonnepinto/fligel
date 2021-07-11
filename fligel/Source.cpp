@@ -1,11 +1,15 @@
 #include<GL/glut.h>
 #include<stdio.h>
+#include<stdlib.h>
 #include<math.h>
-#include <time.h>
+#include<time.h>
+#include<Windows.h>
+#include<MMSystem.h>
 
 int i, j, score = 0, miss_score = 0, flag = 1, miss = 0;
 float x1 = 0, y2 = 0, num = 1;
 int visible[5] = {1, 1, 1, 1, 1};
+int random_y, random, y_move = 10;
 
 void init()
 {
@@ -144,8 +148,8 @@ void bricks(int x) {
 	glColor3d(0.6, 0.6, 0.6);
 	glBegin(GL_POLYGON);
 	glVertex2d(x, 300.0);
-	glVertex2d(x + 15, 300.0);
-	glVertex2d(x + 15, 315.0);
+	glVertex2d(x + 15.0, 300.0);
+	glVertex2d(x + 15.0, 315.0);
 	glVertex2d(x, 315.0);
 	glEnd();
 }
@@ -153,10 +157,11 @@ void bricks(int x) {
 void castle()
 {
 	//Sky 
-	glColor3d(0.0, 0.7, 0.96);
 	glBegin(GL_POLYGON);
+	glColor3d(0.0, 0.7, 0.96);
 	glVertex2d(0.0, 300.0);
-	glVertex2d(500.0, 30.0);
+	glVertex2d(500.0, 300.0);
+	glColor3d(0.0, 0.3, 0.98);
 	glVertex2d(500.0, 500.0);
 	glVertex2d(0.0, 500.0);
 	glEnd();
@@ -171,10 +176,11 @@ void castle()
 	glEnd();
 
 	//Main castle wall
-	glColor3d(0.6, 0.6, 0.6);
 	glBegin(GL_POLYGON);
+	glColor3d(0.5, 0.5, 0.5);
 	glVertex2d(0.0, 100.0);
 	glVertex2d(500.0, 100.0);
+	glColor3d(0.8, 0.8, 0.8);
 	glVertex2d(500.0, 300.0);
 	glVertex2d(0.0, 300.0);
 	glEnd();
@@ -199,10 +205,11 @@ void castle()
 
 
 	//Tomb structure(left)
-	glColor3d(0.8, 0.8, 0.8);
 	glBegin(GL_POLYGON);
+	glColor3d(0.6, 0.6, 0.6);
 	glVertex2d(50, 100.0);
 	glVertex2d(50.0, 320.0);
+	glColor3d(0.8, 0.8, 0.8);
 	glVertex2d(0.0, 320.0);
 	glVertex2d(0.0, 100.0);
 	glEnd();
@@ -244,10 +251,11 @@ void castle()
 
 
 	//Tomb structure(right)
-	glColor3d(0.8, 0.8, 0.8);
 	glBegin(GL_POLYGON);
-	glVertex2d(500 - 50, 100.0);
+	glColor3d(0.6, 0.6, 0.6);
+	glVertex2d(500 - 50.0, 100.0);
 	glVertex2d(500 - 50.0, 320.0);
+	glColor3d(0.8, 0.8, 0.8);
 	glVertex2d(500.0, 320.0);
 	glVertex2d(500.0, 100.0);
 	glEnd();
@@ -290,15 +298,18 @@ void castle()
 
 
 	//Tomb(big) structure(left)
-	glColor3d(0.75, 0.75, 0.75);
 	glBegin(GL_POLYGON);
+	glColor3d(0.65, 0.65, 0.65);
 	glVertex2d(100, 300.0);
 	glVertex2d(100.0, 400.0);
+	glColor3d(0.75, 0.75, 0.75);
 	glVertex2d(100.0 + 50, 400.0);
 	glVertex2d(100.0 + 50, 300.0);
 	glEnd();
 	glBegin(GL_TRIANGLES);
+	glColor3d(0.65, 0.65, 0.65);
 	glVertex2d(100.0, 400.0);
+	glColor3d(0.75, 0.75, 0.75);
 	glVertex2d(100.0 + 25.0, 450.0);
 	glVertex2d(100.0 + 50.0, 400.0);
 	glEnd();
@@ -320,15 +331,19 @@ void castle()
 	glEnd();
 
 	//Tomb(big) structure(right)
-	glColor3d(0.75, 0.75, 0.75);
 	glBegin(GL_POLYGON);
-	glVertex2d(450 - 100, 300.0);
+	glColor3d(0.65, 0.65, 0.65);
+	glVertex2d(450 - 100.0, 300.0);
 	glVertex2d(450 - 100.0, 400.0);
+	glColor3d(0.75, 0.75, 0.75);
 	glVertex2d(450 - 100.0 + 50, 400.0);
 	glVertex2d(450 - 100.0 + 50, 300.0);
 	glEnd();
+
 	glBegin(GL_TRIANGLES);
+	glColor3d(0.65, 0.65, 0.65);
 	glVertex2d(450 - 100.0, 400.0);
+	glColor3d(0.75, 0.75, 0.75);
 	glVertex2d(450 - 100.0 + 25.0, 450.0);
 	glVertex2d(450 - 100.0 + 50.0, 400.0);
 	glEnd();
@@ -350,12 +365,16 @@ void castle()
 	glEnd();
 
 	//Main Door
-	glColor3d(0.4, 0.4, 0.4);
 	glBegin(GL_POLYGON);
+	glColor3d(0.4, 0.4, 0.4);
 	glVertex2d(200.0, 100.0);
+	glColor3d(0.5, 0.5, 0.5);
 	glVertex2d(300.0, 100.0);
+	glColor3d(0.5, 0.5, 0.5);
 	glVertex2d(300.0, 300.0);
+	glColor3d(0.6, 0.6, 0.6);
 	glVertex2d(250.0, 400.0);
+	glColor3d(0.4, 0.4, 0.4);
 	glVertex2d(200.0, 300.0);
 	glEnd();
 
@@ -411,8 +430,8 @@ void hoop(float x, float y){
 	glColor3f(0, 0, 0);
 	glBegin(GL_POLYGON);
 	glVertex2d(x, 0.0);
-	glVertex2d(x + 2, 0.0);
-	glVertex2d(x + 2, y);
+	glVertex2d(x + 2.0, 0.0);
+	glVertex2d(x + 2.0, y);
 	glVertex2d(x, y);
 	glEnd();
 
@@ -430,6 +449,8 @@ void snitch(int id, int x, int y) {
 			visible[k] = 1;
 	}
 
+	random_y = rand() % 8;
+
 	glColor3f(0.95, 0.84, 0);
 	glBegin(GL_TRIANGLE_FAN);
 	for (int i = 0;i < 3600;++i)
@@ -441,27 +462,29 @@ void snitch(int id, int x, int y) {
 	glColor3f(0.9, 1, 1);
 	glBegin(GL_TRIANGLE_STRIP);
 	glVertex2f(7 + x, y);
-	glVertex2f(12 + x, 7 + y);
-	glVertex2f(18 + x, 3 + y);
-	glVertex2f(25 + x, y);
+	glVertex2f(12 + x, 7 + y + random_y);
+	glVertex2f(18 + x, 3 + y + random_y);
+	glVertex2f(25 + x, y + random_y);
 	glEnd();
 	glBegin(GL_TRIANGLE_STRIP);
 	glVertex2f(x - 7, y);
-	glVertex2f(x - 12, y + 7);
-	glVertex2f(x - 18, y + 3);
-	glVertex2f(x - 25, y);
+	glVertex2f(x - 12, y + 7 + random_y);
+	glVertex2f(x - 18, y + 3 + random_y);
+	glVertex2f(x - 25, y + random_y);
 	glEnd();
 
 
-	if (((x == 2*x1)) && (fabsf(y-y2)<30) && (num == id)) {
+	if (((x == 2*x1)) && ((y - y2) < 100) && ((y - y2) > 5) && (num == id)) {
 		flag = 0;
 		num++;
 		visible[id - 1] = 0;
+		sndPlaySound(TEXT("catch.wav"), SND_ASYNC);
 	}
 	if ((x1 == (x / static_cast<float>(2)) + 10) && (num == id)) {
 		num++;
 		visible[id - 1] = 0;
 		miss = 1;
+		sndPlaySound(TEXT("miss.wav"), SND_ASYNC|SND_FILENAME);
 	}
 	
 }
@@ -469,28 +492,37 @@ void snitch(int id, int x, int y) {
 void playground() {
 	hoop(55, 130);
 
+	if(y_move < 0)
+		y_move = 10;
+
+	random = rand() % 10;
+	if (random % 2 == 0)
+		y_move += 2;
+	else
+		y_move -= 2;
+
 	if(visible[0] == 1)
-		snitch(1, 100, 200);   
+		snitch(1, 100, 200 + (y_move + 2));
 
 	hoop(180, 90);
 	if (visible[1] == 1)
-		snitch(2, 232, 120);
+		snitch(2, 232, 150 - (y_move/2));
 
 	hoop(340, 180);
 
 	hoop(450, 125);
 	if (visible[2] == 1)
-		snitch(3, 420, 100);
+		snitch(3, 420, 100 + (y_move + 3));
 
 	hoop(550, 85);
 
 	hoop(680, 190);
 	if (visible[3] == 1)
-		snitch(4, 700, 200);
+		snitch(4, 700, 200 - (y_move/2));
 
 	hoop(800, 100);
 	if (visible[4] == 1)
-		snitch(5, 832, 170);
+		snitch(5, 832, 170 + y_move);
 	
 	if ((visible[4] == 0 && x1 == 500))
 		visible[0] = 1;
@@ -635,6 +667,7 @@ void move()
 	glPopMatrix();
 
 	if (miss_score == 5) {
+		sndPlaySound(TEXT("game_over.wav"), SND_ASYNC | SND_FILENAME);
 		game_over();
 	}
 	if (miss_score == 6) {
