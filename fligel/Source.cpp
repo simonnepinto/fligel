@@ -13,7 +13,8 @@ int random_y, random, y_move = 10;
 
 void init()
 {
-	glClearColor(0.4, 0, 0.2, 1);
+	//glClearColor(0.4, 0, 0.2, 1);
+	glClearColor(0.0, 0.3, 0.4, 0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	glOrtho(0.0, 500.0, 0.0, 500.0, -50, 50);
@@ -97,11 +98,14 @@ void scoreboard() {
 
 void game_over() {
 
-	glColor3d(0, 0, 0);
 	glBegin(GL_POLYGON);
+	glColor3d(0, 0, 0);
 	glVertex2d(100.0, 100.0);
+	glColor3d(0.3, 0.3, 0.3);
 	glVertex2d(400.0, 100.0);
+	glColor3d(0, 0, 0);
 	glVertex2d(400.0, 400.0);
+	glColor3d(0.3, 0.3, 0.3);
 	glVertex2d(100.0, 400.0);
 	glEnd();
 
@@ -161,16 +165,17 @@ void castle()
 	glColor3d(0.0, 0.7, 0.96);
 	glVertex2d(0.0, 300.0);
 	glVertex2d(500.0, 300.0);
-	glColor3d(0.0, 0.3, 0.98);
+	glColor3d(0.0, 0.1, 0.1);
 	glVertex2d(500.0, 500.0);
 	glVertex2d(0.0, 500.0);
 	glEnd();
 
 	//Castle ground
-	glColor3d(0.2, 0.6, 0.2);
 	glBegin(GL_POLYGON);
+	glColor3d(0.1, 0.4, 0.1);
 	glVertex2d(0.0, 0.0);
 	glVertex2d(500.0, 0.0);
+	glColor3d(0.2, 0.8, 0.2);
 	glVertex2d(500.0, 100.0);
 	glVertex2d(0.0, 100.0);
 	glEnd();
@@ -186,19 +191,21 @@ void castle()
 	glEnd();
 
 	//window on wall(left)
-	glColor3d(0.4, 0.4, 0.4);
 	glBegin(GL_POLYGON);
+	glColor3d(0.4, 0.4, 0.4);
 	glVertex2d(80.0, 230.0);
 	glVertex2d(170.0, 230.0);
+	glColor3d(0.5, 0.5, 0.5);
 	glVertex2d(170.0, 270.0);
 	glVertex2d(80.0, 270.0);
 	glEnd();
 
 	//window on wall(right)
-	glColor3d(0.4, 0.4, 0.4);
 	glBegin(GL_POLYGON);
+	glColor3d(0.4, 0.4, 0.4);
 	glVertex2d(330.0, 230.0);
 	glVertex2d(420.0, 230.0);
+	glColor3d(0.5, 0.5, 0.5);
 	glVertex2d(420.0, 270.0);
 	glVertex2d(330.0, 270.0);
 	glEnd();
@@ -545,10 +552,11 @@ void harry()
 	glColor3f(0, 0, 0);
 	glBegin(GL_POLYGON);
 	glVertex2d(0, 10);
-	glVertex2d(25, 10);
+	glVertex2d(23, 10);
 	glVertex2d(20, 20);
 	glVertex2d(0, 20);
 	glEnd();
+
 	//Socks 
 	glColor3d(0.9, 0.8, 0.8);
 	glBegin(GL_POLYGON);
@@ -588,6 +596,7 @@ void harry()
 	glVertex2d(20, 50);
 	glVertex2d(0, 50);
 	glEnd();
+
 	//Shirt
 	glColor3f(1, 0, 0);
 	glBegin(GL_POLYGON);
@@ -598,7 +607,7 @@ void harry()
 	glEnd();
 
 	//Head
-	glColor3f(0.9, 0.6, 0.6);
+	glColor3f(0.9, 0.7, 0.7);
 	glBegin(GL_POLYGON);
 	glVertex2d(0, 70);
 	glVertex2d(20, 70);
@@ -631,6 +640,27 @@ void harry()
 	glPointSize(5);
 	glBegin(GL_POINTS);
 	glVertex2d(15, 85);
+	glEnd();
+
+	//Glasses
+	glBegin(GL_LINES);
+	glVertex2d(11.0, 85.0);
+	glVertex2d(5.0, 87.0);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVertex2d(19.0, 85.0);
+	glVertex2d(20.0, 86.0);
+	glEnd();
+
+	glColor3f(0.1, 0.1, 0.1);
+	glRotatef(10, 0, 1, 0);
+	glBegin(GL_LINE_STRIP);
+	for (int i = 0; i < 3600; ++i)
+	{
+		float th = i * 3.142 / 1800;
+		glVertex2f(4 * cos(th) + 15, 4 * sin(th) + 85);
+	}
 	glEnd();
 }
 
