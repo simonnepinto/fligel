@@ -13,3 +13,17 @@
 https://user-images.githubusercontent.com/53074235/126789615-f45e07e4-6ced-489f-b293-d533128d3d29.mp4
   
 </td></tr></table> 
+
+ <Video
+                    ref={(ref) => {
+                      this.player = ref
+                    }}
+                    source={{ uri: this.state.video }}
+                    resizeMode='cover'
+                    repeat={true}
+                    playWhenInactive={true}
+                    style={{
+                        width:'100%',
+                        height:225
+                    }} 
+             />
