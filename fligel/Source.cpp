@@ -149,12 +149,20 @@ void delay()
 }
 
 void bricks(int x) {
-	glColor3d(0.6, 0.6, 0.6);
+	glColor3d(0.8, 0.8, 0.8);
 	glBegin(GL_POLYGON);
 	glVertex2d(x, 300.0);
 	glVertex2d(x + 15.0, 300.0);
 	glVertex2d(x + 15.0, 315.0);
 	glVertex2d(x, 315.0);
+	glEnd();
+}
+
+void stars(int x, int y) {
+	glColor3d(0.99, 0.99, 0.95);
+	glPointSize(4);
+	glBegin(GL_POINTS);
+	glVertex2d(x, y);
 	glEnd();
 }
 
@@ -168,6 +176,16 @@ void castle()
 	glColor3d(0.0, 0.1, 0.1);
 	glVertex2d(500.0, 500.0);
 	glVertex2d(0.0, 500.0);
+	glEnd();
+
+	//Moon
+	glBegin(GL_TRIANGLE_FAN);
+	glColor3f(0.98, 0.98, 0.88);
+	for (int i = 0; i < 3600; ++i)
+	{
+		float th = i * 3.142 / 1800;
+		glVertex2f(25 * cos(th) + 410, 25 * sin(th) + 410);
+	}
 	glEnd();
 
 	//Castle ground
@@ -191,25 +209,61 @@ void castle()
 	glEnd();
 
 	//window on wall(left)
+	glBegin(GL_TRIANGLE_FAN);
+	glColor3d(0.45, 0.45, 0.45);
+	for (int i = 0; i < 1800; ++i)
+	{
+		float th = i * 3.142 / 1800;
+		glVertex2f(55 * cos(th) + 125, 55 * sin(th) + 230);
+	}
+	glEnd();
+
+	glBegin(GL_LINES);
+	glColor3d(0.2, 0.2, 0.2);
+	glVertex2d(125.0, 230.0);
+	glVertex2d(125.0, 285.0);
+	glVertex2d(125.0, 230.0);
+	glVertex2d(170.0, 260.0);
+	glVertex2d(125.0, 230.0);
+	glVertex2d(80.0, 260.0);
+	glEnd();
+
 	glBegin(GL_POLYGON);
-	glColor3d(0.4, 0.4, 0.4);
-	glVertex2d(80.0, 230.0);
-	glVertex2d(170.0, 230.0);
-	glColor3d(0.5, 0.5, 0.5);
-	glVertex2d(170.0, 270.0);
-	glVertex2d(80.0, 270.0);
+	glColor3d(0.8, 0.8, 0.8);
+	glVertex2d(70.0, 230.0);
+	glVertex2d(180.0, 230.0);
+	glColor3d(0.5, 0.5, 0.5);	
+	glVertex2d(180.0, 220.0);
+	glVertex2d(70.0, 220.0);
 	glEnd();
 
 	//window on wall(right)
+	glBegin(GL_TRIANGLE_FAN);
+	glColor3d(0.45, 0.45, 0.45);
+	for (int i = 0; i < 1800; ++i)
+	{
+		float th = i * 3.142 / 1800;
+		glVertex2f(55 * cos(th) + 375, 55 * sin(th) + 230);
+	}
+	glEnd();
 	glBegin(GL_POLYGON);
-	glColor3d(0.4, 0.4, 0.4);
-	glVertex2d(330.0, 230.0);
-	glVertex2d(420.0, 230.0);
+	glColor3d(0.8, 0.8, 0.8);
+	glVertex2d(320.0, 230.0);
+	glVertex2d(430.0, 230.0);
 	glColor3d(0.5, 0.5, 0.5);
-	glVertex2d(420.0, 270.0);
-	glVertex2d(330.0, 270.0);
+	glVertex2d(430.0, 220.0);
+	glVertex2d(320.0, 220.0);
 	glEnd();
 
+	glBegin(GL_LINES);
+	glColor3d(0.2, 0.2, 0.2);
+	glVertex2d(375.0, 230.0);
+	glVertex2d(375.0, 285.0);
+	glVertex2d(375.0, 230.0);
+	glVertex2d(420, 260.0);
+	glVertex2d(375.0, 230.0);
+	glVertex2d(330.0, 260.0);
+	glEnd();
 
 	//Tomb structure(left)
 	glBegin(GL_POLYGON);
@@ -313,12 +367,35 @@ void castle()
 	glVertex2d(100.0 + 50, 400.0);
 	glVertex2d(100.0 + 50, 300.0);
 	glEnd();
+
 	glBegin(GL_TRIANGLES);
 	glColor3d(0.65, 0.65, 0.65);
 	glVertex2d(100.0, 400.0);
 	glColor3d(0.75, 0.75, 0.75);
 	glVertex2d(100.0 + 25.0, 450.0);
 	glVertex2d(100.0 + 50.0, 400.0);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glColor3d(0.1, 0.1, 0.1);
+	glVertex2d(125, 450);
+	glVertex2d(125, 470);
+	glEnd();
+
+	glBegin(GL_TRIANGLES);
+	glColor3d(1, 0.1, 0.1);
+	glVertex2d(125, 456);
+	glVertex2d(138, 464);
+	glVertex2d(125, 472);
+	glEnd();
+
+	//roof of tomb
+	glBegin(GL_POLYGON);
+	glColor3d(0.65, 0.65, 0.65);
+	glVertex2d(97, 398.0);
+	glVertex2d(97, 402.0);
+	glVertex2d(153, 402.0);
+	glVertex2d(153, 398.0);
 	glEnd();
 
 	glColor3d(0.4, 0.4, 0.4);
@@ -355,6 +432,27 @@ void castle()
 	glVertex2d(450 - 100.0 + 50.0, 400.0);
 	glEnd();
 
+	glBegin(GL_LINES);
+	glColor3d(0.1, 0.1, 0.1);
+	glVertex2d(375, 450);
+	glVertex2d(375, 470);
+	glEnd();
+
+	glBegin(GL_TRIANGLES);
+	glColor3d(1, 0.1, 0.1);
+	glVertex2d(375, 456);
+	glVertex2d(388, 464);
+	glVertex2d(375, 472);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3d(0.65, 0.65, 0.65);
+	glVertex2d(347, 398.0);
+	glVertex2d(347, 402.0);
+	glVertex2d(403, 402.0);
+	glVertex2d(403, 398.0);
+	glEnd();
+
 	glColor3d(0.4, 0.4, 0.4);
 	glBegin(GL_POLYGON);
 	glVertex2d(365, 330.0);
@@ -373,24 +471,103 @@ void castle()
 
 	//Main Door
 	glBegin(GL_POLYGON);
-	glColor3d(0.4, 0.4, 0.4);
-	glVertex2d(200.0, 100.0);
+	glColor3d(0.6, 0.6, 0.6);
+	glVertex2d(300, 300.0);
+	glColor3d(0.7, 0.7, 0.7);
+	glVertex2d(300, 350.0);
+	glVertex2d(200, 350.0);
 	glColor3d(0.5, 0.5, 0.5);
-	glVertex2d(300.0, 100.0);
+	glVertex2d(200, 300.0);
+	glEnd();
+	glBegin(GL_POLYGON);
 	glColor3d(0.5, 0.5, 0.5);
-	glVertex2d(300.0, 300.0);
+	glVertex2d(200, 350.0);
 	glColor3d(0.6, 0.6, 0.6);
 	glVertex2d(250.0, 400.0);
-	glColor3d(0.4, 0.4, 0.4);
-	glVertex2d(200.0, 300.0);
+	glColor3d(0.5, 0.5, 0.5);
+	glVertex2d(300, 350.0);
 	glEnd();
 
-	glColor3d(0.25, 0.25, 0.25);
+	//windows
 	glBegin(GL_POLYGON);
-	glVertex2d(230, 100.0);
-	glVertex2d(270, 100.0);
-	glVertex2d(270, 250.0);
-	glVertex2d(230, 250.0);
+	glColor3d(0.4, 0.4, 0.4);
+	glVertex2d(210, 320);
+	glVertex2d(230, 320);
+	glVertex2d(230, 335);
+	glVertex2d(210, 335);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3d(0.4, 0.4, 0.4);
+	glVertex2d(240, 320);
+	glVertex2d(260, 320);
+	glVertex2d(260, 335);
+	glVertex2d(240, 335);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3d(0.4, 0.4, 0.4);
+	glVertex2d(270, 320);
+	glVertex2d(290, 320);
+	glVertex2d(290, 335);
+	glVertex2d(270, 335);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3d(0.3, 0.3, 0.3);
+	glVertex2d(200, 100.0);
+	glVertex2d(300, 100.0);
+	glColor3d(0.5, 0.5, 0.5);
+	glVertex2d(300, 200.0);
+	glVertex2d(200, 200.0);
+	glEnd();
+
+	glBegin(GL_TRIANGLE_FAN);
+	glColor3d(0.5, 0.5, 0.5);
+	for (int i = 0; i < 1800; ++i)
+	{
+		float th = i * 3.142 / 1800;
+		glVertex2f(50 * cos(th) + 250, 50 * sin(th) + 199);
+	}
+	glEnd();
+
+	glColor3d(0.2, 0.2, 0.2);
+	glBegin(GL_LINES);
+	glVertex2d(250, 100);
+	glVertex2d(250, 249);
+	glVertex2d(240, 100);
+	glVertex2d(240, 247);
+	glVertex2d(230, 100);
+	glVertex2d(230, 245);
+	glVertex2d(220, 100);
+	glVertex2d(220, 239);
+	glVertex2d(210, 100);
+	glVertex2d(210, 229);
+
+	glVertex2d(260, 100);
+	glVertex2d(260, 247);
+	glVertex2d(270, 100);
+	glVertex2d(270, 245);
+	glVertex2d(280, 100);
+	glVertex2d(280, 239);
+	glVertex2d(290, 100);
+	glVertex2d(290, 229);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3d(0.35, 0.35, 0.35);
+	glVertex2d(200, 140);
+	glVertex2d(300, 140);
+	glVertex2d(300, 150);
+	glVertex2d(200, 150);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3d(0.4, 0.4, 0.4);
+	glVertex2d(200, 190);
+	glVertex2d(300, 190);
+	glVertex2d(300, 200);
+	glVertex2d(200, 200);
 	glEnd();
 
 	//windows
@@ -404,18 +581,31 @@ void castle()
 	glEnd();
 
 	//bricks
+	bricks(50);
 	bricks(70);
 	bricks(90);
 	bricks(110);
 	bricks(130);
 	bricks(150);
 	bricks(170);
-	bricks(320);
-	bricks(340);
-	bricks(360);
-	bricks(380);
-	bricks(400);
-	bricks(420);
+	bricks(190);
+	bricks(210);
+	bricks(230);
+	bricks(250);
+	bricks(270);
+	bricks(290);
+	bricks(310);
+	bricks(330);
+	bricks(350);
+	bricks(370);
+	bricks(390);
+	bricks(412);
+	bricks(435);
+
+	//stars
+	stars(30, 480); stars(80, 440); stars(165, 420); stars(275, 405); stars(357, 445); stars(432, 335); stars(320, 485);
+	stars(50, 400); stars(100, 470); stars(175, 347); stars(295, 465); stars(412, 427); stars(465, 425); stars(488, 445);
+	stars(65, 345); stars(15, 420); stars(207, 485); stars(325, 375); stars(160, 378); stars(490, 495);
 }
 
 void newCircle(float x, float y, float radius) {
@@ -458,8 +648,10 @@ void snitch(int id, int x, int y) {
 
 	random_y = rand() % 8;
 
-	glColor3f(0.95, 0.84, 0);
 	glBegin(GL_TRIANGLE_FAN);
+	glColor3f(0.95, 0.84, 0);
+	glVertex2f(x, y);
+	glColor3f(0.85, 0.78, 0.11);
 	for (int i = 0;i < 3600;++i)
 	{
 		float th = i * 3.142 / 1800;
@@ -487,6 +679,7 @@ void snitch(int id, int x, int y) {
 		visible[id - 1] = 0;
 		sndPlaySound(TEXT("catch.wav"), SND_ASYNC);
 	}
+
 	if ((x1 == (x / static_cast<float>(2)) + 10) && (num == id)) {
 		num++;
 		visible[id - 1] = 0;
@@ -494,6 +687,21 @@ void snitch(int id, int x, int y) {
 		sndPlaySound(TEXT("miss.wav"), SND_ASYNC|SND_FILENAME);
 	}
 	
+}
+
+void bludger(int x, int y) {
+	
+	glBegin(GL_TRIANGLE_FAN);
+	glColor3f(0.58, 0.30, 0.2);
+	glVertex2f(x, y);
+
+	glColor3f(0.42, 0.26, 0.12);
+	for (int i = 0; i < 3600; ++i)
+	{
+		float th = i * 3.142 / 1800;
+		glVertex2f(13 * cos(th) + x, 13 * sin(th) + y);
+	}
+	glEnd();
 }
 
 void playground() {
@@ -512,6 +720,7 @@ void playground() {
 		snitch(1, 100, 200 + (y_move + 2));
 
 	hoop(180, 90);
+
 	if (visible[1] == 1)
 		snitch(2, 232, 150 - (y_move/2));
 
@@ -558,10 +767,11 @@ void harry()
 	glEnd();
 
 	//Socks 
-	glColor3d(0.9, 0.8, 0.8);
 	glBegin(GL_POLYGON);
+	glColor3d(0.9, 0.8, 0.8);
 	glVertex2d(0.0, 20.0);
 	glVertex2d(10.0, 20.0);
+	glColor3d(0.9, 0.65, 0.7);
 	glVertex2d(10.0, 40.0);
 	glVertex2d(0.0, 40.0);
 	glEnd();
@@ -573,10 +783,11 @@ void harry()
 	glVertex2d(0.0, 40.0);
 	glEnd();
 
-	glColor3d(0.9, 0.8, 0.8);
 	glBegin(GL_POLYGON);
+	glColor3d(0.9, 0.8, 0.8);
 	glVertex2d(10.0, 20.0);
 	glVertex2d(20.0, 20.0);
+	glColor3d(0.9, 0.65, 0.7);
 	glVertex2d(20.0, 40.0);
 	glVertex2d(10.0, 40.0);
 	glEnd();
@@ -598,12 +809,39 @@ void harry()
 	glEnd();
 
 	//Shirt
-	glColor3f(1, 0, 0);
 	glBegin(GL_POLYGON);
+	glColor3f(1, 0, 0);
 	glVertex2d(0, 50);
 	glVertex2d(20, 50);
+	glColor3f(1, 0.5, 0.5);
 	glVertex2d(20, 70);
 	glVertex2d(0, 70);
+	glEnd();
+
+	//Hand
+	glBegin(GL_POLYGON);
+	glColor3f(1, 0, 0);
+	glVertex2d(0, 70);
+	glVertex2d(12, 70);
+	glVertex2d(16, 60);
+	glVertex2d(10, 60);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3f(0.9, 0.7, 0.7);
+	glVertex2d(16, 60);
+	glVertex2d(10, 60);
+	glVertex2d(20, 53);
+	glVertex2d(26, 53);
+	glEnd();
+
+	//Wand
+	glColor3f(0, 0, 0);
+	glBegin(GL_LINES);
+	glPointSize(3);
+	glVertex2d(26, 53);
+	glPointSize(5);
+	glVertex2d(45, 65);
 	glEnd();
 
 	//Head
